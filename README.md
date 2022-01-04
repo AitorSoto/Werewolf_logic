@@ -75,4 +75,4 @@ See [LICENSE](LICENSE) for more information.
 <p align="right"><a href="#top">back to top</a></p>
 
 ---
-<p align="center"><sup>The Game of the Amazons PureScript Engine</sup></p>
+<p align="center"><sup>Werewolf</sup></p>
