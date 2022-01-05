@@ -1,0 +1,116 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Werewolf
+  license:
+    name: MIT
+paths:
+  /villagers:
+    get:
+      summary: List all villagers alive
+      operationId: listVillagersAlive
+      tags:
+        - Villagers
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 15)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: A paged array of villagers alive, no matters the role
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Village"
+        '400':
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create a villager
+      operationId: createVillager
+      tags:
+        - Villagers
+      parameters:
+        - $ref: "#/components/schemas/Villager"
+      responses:
+        '401':
+          description: Null response
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /villagers/{villagerId}:
+    get:
+      summary: Info for a specific pet
+      operationId: showVillagerById
+      tags:
+        - Villagers
+      parameters:
+        - name: villagerId
+          in: path
+          required: true
+          description: The id of the villager to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Villager"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Villager:
+      type: object
+      required:
+        - id
+        - name
+        - role
+        - alive
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        role:
+          type: string
+          enum: [Villager, Cupido, Wolf, Alchemist, Hunter]
+        alive:
+          type: boolean
+    Village:
+      type: array
+      items:
+        $ref: "#/components/schemas/Villager"
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
