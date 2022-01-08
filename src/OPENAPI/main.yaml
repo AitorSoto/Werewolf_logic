@@ -55,7 +55,7 @@ paths:
                 $ref: "#/components/schemas/Error"
   /villagers/{villagerId}:
     get:
-      summary: Info for a specific pet
+      summary: Info for a specific villager
       operationId: showVillagerById
       tags:
         - Villagers
@@ -96,7 +96,7 @@ components:
           type: string
         role:
           type: string
-          enum: [Villager, Cupido, Wolf, Alchemist, Hunter]
+          enum: [VILLAGER, WEREWOLF, JESTER, DOCTOR, WATCHMAN, INVESTIGATOR, MAYOR]
         alive:
           type: boolean
     Village:
